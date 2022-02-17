@@ -21,7 +21,7 @@ spec:
         - /manager
         args:
         - --leader-elect
-        image: {{ .Values.image}}
+        image: {{ .Values.ldmImage}}
         name: manager
         env:
           - name: NODENAME
@@ -61,11 +61,11 @@ spec:
           periodSeconds: 10
         resources:
           limits:
-            cpu: {{ .Values.resources.limits.cpu}}
-            memory: {{ .Values.resources.limits.memory}}
+            cpu: {{ .Values.ldmResources.limits.cpu}}
+            memory: {{ .Values.ldmResources.limits.memory}}
           requests:
-            cpu: {{ .Values.resources.requests.cpu}}
-            memory: {{ .Values.resources.requests.memory}}
+            cpu: {{ .Values.ldmResources.requests.cpu}}
+            memory: {{ .Values.ldmResources.requests.memory}}
       serviceAccountName: cherry-io-admin 
       serviceAccount: cherry-io-admin
       tolerations:
