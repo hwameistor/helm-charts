@@ -21,10 +21,3 @@ version: 0.1.1
 appVersion:
 
 
-dependencies:
-- condition: cherry-io-basic.enabled
-  name: cherry-io-basic
-  version: 0.0.1
-- condition: cherry-io-ldm.enabled
-  name: cherry-io-ldm
-  version: 0.0.1

@@ -22,7 +22,3 @@ version: 0.1.1
 # follow Semantic Versioning. They should reflect the version the application is using.
 appVersion: 
 
-dependencies:
-- condition: cherry-io-basic.enabled
-  name: cherry-io-basic
-  version: 0.0.1
