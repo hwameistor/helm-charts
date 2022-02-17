@@ -12,7 +12,7 @@ Please refer to Helm's [documentation](https://helm.sh/docs/) to get started.
 Once Helm is set up properly, add the repo as follows:
 
 ```console
-helm repo add hwameistor https://github.com/prometheus-community/helm-charts
+helm repo add hwameistor https://github.com/hwameistor/helm-charts
 ```
 
 You can then run `helm search repo hwameistor` to see the charts.
