@@ -1,0 +1,50 @@
+controller:
+  registrar:
+    image: 10.7.209.48/kube-system/dce-uds-csi-node-driver-registrar:v1.1.0
+    resources:
+      limits:
+        cpu: 500m
+        memory: 500Mi
+      requests:
+        cpu: 5m
+        memory: 5Mi
+  member:
+    image: daocloud.io/daocloud/dce-uds-local-storage:cherry-io-0.0.1-amd64
+    resources:
+      limits:
+        cpu: 500m
+        memory: 500Mi
+      requests:
+        cpu: 5m
+        memory: 5Mi
+
+csidriver:
+  replicas: 1
+  serviceAccount: dce-uds-admin
+  provisioner:
+    image: 10.7.209.48/kube-system/dce-uds-csi-provisioner:v2.0.3
+    resources:
+      limits:
+        cpu: 500m
+        memory: 500Mi
+      requests:
+        cpu: 5m
+        memory: 5Mi
+  attacher:
+    image: 10.7.209.48/kube-system/dce-uds-csi-attacher:v3.0.1
+    resources:
+      limits:
+        cpu: 500m
+        memory: 500Mi
+      requests:
+        cpu: 5m
+        memory: 5Mi
+  resizer:
+    image: 10.7.209.48/kube-system/dce-uds-csi-resizer:v1.0.1 
+    resources:
+      limits:
+        cpu: 500m
+        memory: 500Mi
+      requests:
+        cpu: 5m
+        memory: 5Mi

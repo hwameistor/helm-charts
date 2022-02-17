@@ -1,0 +1,177 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: cherry-io 
+  namespace: {{ .Release.Namespace}}
+spec:
+  selector:
+    matchLabels:
+      app: cherry-io 
+  template:
+    metadata:
+      labels:
+        app: cherry-io 
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: csi.driver.uds.dce.daocloud.io/local.storage.daocloud.io
+                operator: Exists
+      containers:
+      - args:
+        - --v=5
+        - --csi-address=/csi/csi.sock
+        - --kubelet-registration-path=/var/lib/kubelet/plugins/local.storage.daocloud.io/csi.sock
+        env:
+        - name: KUBE_NODE_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.nodeName
+        image: {{ .Values.controller.registrar.image }}
+        imagePullPolicy: IfNotPresent
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - rm -rf /registration/local.storage.daocloud.io /registration/local.storage.daocloud.io-reg.sock
+        name: registrar
+        resources: 
+          limits:
+            cpu: {{ .Values.controller.registrar.resources.limits.cpu}}
+            memory: {{ .Values.controller.registrar.resources.limits.memory}}
+          requests:
+            cpu: {{ .Values.controller.registrar.resources.requests.cpu}}
+            memory: {{ .Values.controller.registrar.resources.requests.memory}}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /csi
+          name: socket-dir
+        - mountPath: /registration
+          name: registration-dir
+      - args:
+        - --nodename=$(MY_NODENAME)
+        - --namespace=$(POD_NAMESPACE)
+        - --csi-address=$(CSI_ENDPOINT)
+        - --http-port=80
+        - --debug=true
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: MY_NODENAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.nodeName
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: CSI_ENDPOINT
+          value: unix://var/lib/kubelet/plugins/local.storage.daocloud.io/csi.sock
+        - name: NODE_ANNOTATION_KEY_STORAGE_IPV4
+          value: uds.dce.daocloud.io/storage-ipv4
+        image: {{ .Values.controller.member.image}}
+        imagePullPolicy: IfNotPresent
+        name: member
+        ports:
+        - containerPort: 80
+          name: healthz
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 5
+          httpGet:
+            path: /healthz
+            port: healthz
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 2
+          successThreshold: 1
+          timeoutSeconds: 3
+        resources:
+          limits:
+            cpu: {{ .Values.controller.member.resources.limits.cpu}}
+            memory: {{ .Values.controller.member.resources.limits.memory}}
+          requests:
+            cpu: {{ .Values.controller.member.resources.requests.cpu}}
+            memory: {{ .Values.controller.member.resources.requests.memory}}
+        securityContext:
+          #  allowPrivilegeEscalation: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+          privileged: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/lib/kubelet/plugins
+          mountPropagation: Bidirectional
+          name: plugin-dir
+        - mountPath: /var/lib/kubelet/plugins_registry
+          name: registration-dir
+        - mountPath: /var/lib/kubelet/pods
+          mountPropagation: Bidirectional
+          name: pods-mount-dir
+        - mountPath: /dev
+          name: host-dev
+        - mountPath: /etc/drbd.d
+          mountPropagation: Bidirectional
+          name: host-etc-drbd
+      dnsPolicy: ClusterFirstWithHostNet
+      hostPID: true
+      priorityClassName: system-node-critical
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      serviceAccountName: cherry-io-admin 
+      serviceAccount: cherry-io-admin
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+      - effect: NoSchedule
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/master
+        operator: Exists
+      - effect: NoSchedule
+        key: node.cloudprovider.kubernetes.io/uninitialized
+        operator: Exists
+      volumes:
+      - hostPath:
+          path: /var/lib/kubelet/plugins/local.storage.daocloud.io
+          type: DirectoryOrCreate
+        name: socket-dir
+      - hostPath:
+          path: /var/lib/kubelet/plugins
+          type: DirectoryOrCreate
+        name: plugin-dir
+      - hostPath:
+          path: /var/lib/kubelet/plugins_registry/
+          type: Directory
+        name: registration-dir
+      - hostPath:
+          path: /dev
+          type: ""
+        name: host-dev
+      - hostPath:
+          path: /etc/drbd.d
+          type: DirectoryOrCreate
+        name: host-etc-drbd
+      - hostPath:
+          path: /var/lib/kubelet/pods
+          type: DirectoryOrCreate
+        name: pods-mount-dir
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
