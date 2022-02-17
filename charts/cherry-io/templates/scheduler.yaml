@@ -4,7 +4,7 @@ metadata:
   name: cherry-io-scheduler
   namespace: {{ .Release.Namespace}}
 spec:
-  replicas: {{ .Values.replicas}}
+  replicas: {{ .Values.cherryIOSchedulerReplicas}}
   selector:
     matchLabels:
       app: cherry-io-scheduler
@@ -33,16 +33,16 @@ spec:
         - --leader-elect-resource-name=cherry-io-scheduler
         - --leader-elect-resource-namespace={{ .Release.Namespace}}
         - --config=/etc/cherry-io/cherry-io-scheduler-config.yaml
-        image: {{ .Values.image}}
+        image: {{ .Values.cherryIOSchedulerImage}}
         imagePullPolicy: IfNotPresent
         name: cherry-io-kube-scheduler
         resources:
           limits:
-            cpu: {{ .Values.resources.limits.cpu}}
-            memory: {{ .Values.resources.limits.memory}}
+            cpu: {{ .Values.cherryIOSchedulerResources.limits.cpu}}
+            memory: {{ .Values.cherryIOSchedulerResources.limits.memory}}
           requests:
-            cpu: {{ .Values.resources.requests.cpu}}
-            memory: {{ .Values.resources.requests.memory}}
+            cpu: {{ .Values.cherryIOSchedulerResources.requests.cpu}}
+            memory: {{ .Values.cherryIOSchedulerResources.requests.memory}}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:

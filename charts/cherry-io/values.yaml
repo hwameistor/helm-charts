@@ -1,3 +1,16 @@
+cherryIOSchedulerReplicas: 1
+schedulerKubeApiServerConfigFilePath: /etc/kubernetes/admin.conf
+cherryIOSchedulerImage: daocloud.io/daocloud/dce-kube-scheduler:v1.18.19.1
+
+cherryIOSchedulerResources:
+  limits:
+    cpu: 300m
+    memory: 300Mi
+  requests:
+    cpu: 100m
+    memory: 100Mi
+
+
 controller:
   registrar:
     image: 10.7.209.48/kube-system/dce-uds-csi-node-driver-registrar:v1.1.0

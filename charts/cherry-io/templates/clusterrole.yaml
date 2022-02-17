@@ -1,0 +1,13 @@
+{{- if not (lookup "rbac.authorization.k8s.io/v1" "ClusterRole" "" "cherry-io-role") }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cherry-io-role
+rules:
+- apiGroups: ["*"]
+  resources:
+  - "*"
+  verbs: ["*"]
+- nonResourceURLs: ["*"]
+  verbs: ["*"]
+{{- end }}
