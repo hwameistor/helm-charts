@@ -24,4 +24,4 @@ We'd love to have you contribute!
 ## License
 
 <!-- Keep full URL links to repo files because this README syncs from main to gh-pages.  -->
-[Apache 2.0 License]().
+[Apache 2.0 License](https://github.com/hwameistor/helm-charts/blob/helm/LICENSE).
