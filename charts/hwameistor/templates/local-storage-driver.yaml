@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: cherry-io 
+  name: hwameistor 
   namespace: {{ .Release.Namespace}}
 spec:
   selector:
     matchLabels:
-      app: cherry-io 
+      app: hwameistor 
   template:
     metadata:
       labels:
-        app: cherry-io 
+        app: hwameistor 
     spec:
       affinity:
         nodeAffinity:
@@ -131,8 +131,8 @@ spec:
       priorityClassName: system-node-critical
       restartPolicy: Always
       schedulerName: default-scheduler
-      serviceAccountName: cherry-io-admin 
-      serviceAccount: cherry-io-admin
+      serviceAccountName: hwameistor-admin 
+      serviceAccount: hwameistor-admin
       terminationGracePeriodSeconds: 30
       tolerations:
       - key: CriticalAddonsOnly
