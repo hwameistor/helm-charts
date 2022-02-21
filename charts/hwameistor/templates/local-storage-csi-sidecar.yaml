@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cherry-io-csi-controller 
+  name: hwameistor-csi-controller 
   namespace: {{ .Release.Namespace}}
 spec:
   replicas: {{ .Values.csidriver.replicas}}
   selector:
     matchLabels:
-      app: cherry-io-csi-controller
+      app: hwameistor-csi-controller
   strategy:
     type: Recreate
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: cherry-io-csi-controller
+        app: hwameistor-csi-controller
     spec:
       affinity:
         podAffinity:
@@ -24,7 +24,7 @@ spec:
               - key: app
                 operator: In
                 values:
-                - cherry-io
+                - hwameistor
             topologyKey: uds.dce.daocloud.io/local-storage-topology-node
       containers:
       - args:
@@ -99,8 +99,8 @@ spec:
       dnsPolicy: ClusterFirst
       priorityClassName: system-cluster-critical
       restartPolicy: Always
-      serviceAccountName: cherry-io-admin 
-      serviceAccount: cherry-io-admin
+      serviceAccountName: hwameistor-admin 
+      serviceAccount: hwameistor-admin
       securityContext: {}
       terminationGracePeriodSeconds: 30
       tolerations:

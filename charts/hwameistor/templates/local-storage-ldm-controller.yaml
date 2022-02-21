@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: cherry-io-ldm-controller
+  name: hwameistor-ldm-controller
   namespace: {{ .Release.Namespace}} 
   labels:
-    control-plane: cherry-io-ldm-controller
+    control-plane: hwameistor-ldm-controller
 spec:
   selector:
     matchLabels:
-      control-plane: cherry-io-ldm-controller
+      control-plane: hwameistor-ldm-controller
   template:
     metadata:
       labels:
-        control-plane: cherry-io-ldm-controller
+        control-plane: hwameistor-ldm-controller
     spec:
       securityContext:
         runAsNonRoot: false
@@ -66,8 +66,8 @@ spec:
           requests:
             cpu: {{ .Values.ldmResources.requests.cpu}}
             memory: {{ .Values.ldmResources.requests.memory}}
-      serviceAccountName: cherry-io-admin 
-      serviceAccount: cherry-io-admin
+      serviceAccountName: hwameistor-admin 
+      serviceAccount: hwameistor-admin
       tolerations:
       - key: CriticalAddonsOnly
         operator: Exists
