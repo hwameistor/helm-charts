@@ -17,13 +17,13 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: csi.driver.uds.dce.daocloud.io/local.storage.daocloud.io
+              - key: csi.driver.hwameistor.io/localstorage
                 operator: Exists
       containers:
       - args:
         - --v=5
         - --csi-address=/csi/csi.sock
-        - --kubelet-registration-path=/var/lib/kubelet/plugins/local.storage.daocloud.io/csi.sock
+        - --kubelet-registration-path=/var/lib/kubelet/plugins/localstorage.hwameistor.io/csi.sock
         env:
         - name: KUBE_NODE_NAME
           valueFrom:
@@ -38,7 +38,7 @@ spec:
               command:
               - /bin/sh
               - -c
-              - rm -rf /registration/local.storage.daocloud.io /registration/local.storage.daocloud.io-reg.sock
+              - rm -rf /registration/localstorage.hwameistor.io /registration/localstorage.hwameistor.io-reg.sock
         name: registrar
         resources: 
           limits:
@@ -77,9 +77,9 @@ spec:
               apiVersion: v1
               fieldPath: metadata.namespace
         - name: CSI_ENDPOINT
-          value: unix://var/lib/kubelet/plugins/local.storage.daocloud.io/csi.sock
+          value: unix://var/lib/kubelet/plugins/localstorage.hwameistor.io/csi.sock
         - name: NODE_ANNOTATION_KEY_STORAGE_IPV4
-          value: uds.dce.daocloud.io/storage-ipv4
+          value: localstorage.hwameistor.io/storage-ipv4
         image: {{ .Values.controller.member.image}}
         imagePullPolicy: IfNotPresent
         name: member
@@ -148,7 +148,7 @@ spec:
         operator: Exists
       volumes:
       - hostPath:
-          path: /var/lib/kubelet/plugins/local.storage.daocloud.io
+          path: /var/lib/kubelet/plugins/localstorage.hwameistor.io
           type: DirectoryOrCreate
         name: socket-dir
       - hostPath:
