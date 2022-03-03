@@ -117,6 +117,6 @@ spec:
         operator: Exists
       volumes:
       - hostPath:
-          path: /var/lib/kubelet/plugins/local.storage.hwameistor.io
+          path: /var/lib/kubelet/plugins/localstorage.hwameistor.io
           type: DirectoryOrCreate
         name: socket-dir
