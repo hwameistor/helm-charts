@@ -20,7 +20,7 @@ ldmResources:
 
 controller:
   registrar:
-    image: ghcr.io/hwameistor/csi-node-driver-registrar:v1.1.0
+    image: k8s.gcr.io/sig-storage/csi-node-driver-registrar:v1.1.0
     resources:
       limits:
         cpu: 500m
