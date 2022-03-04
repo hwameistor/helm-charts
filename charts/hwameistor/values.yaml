@@ -9,7 +9,7 @@ hwameistorSchedulerResources:
     cpu: 100m
     memory: 100Mi
 
-ldmImage: ghcr.io/hwameistor/local-disk-manager:v0.0.1
+ldmImage: ghcr.io/hwameistor/local-disk-manager:v0.0.2
 ldmResources:
   limits:
     cpu: 300m
