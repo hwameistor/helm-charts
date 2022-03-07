@@ -20,7 +20,7 @@ ldmResources:
 
 controller:
   registrar:
-    image: k8s.gcr.io/sig-storage/csi-node-driver-registrar:v1.1.0
+    image: quay.io/k8scsi/csi-node-driver-registrar:v1.1.0
     resources:
       limits:
         cpu: 500m
@@ -41,7 +41,7 @@ controller:
 csidriver:
   replicas: 1
   provisioner:
-    image: k8s.gcr.io/sig-storage/csi-provisioner:v2.0.3
+    image: quay.io/k8scsi/csi-provisioner:v2.0.3
     resources:
       limits:
         cpu: 500m
@@ -50,7 +50,7 @@ csidriver:
         cpu: 5m
         memory: 5Mi
   attacher:
-    image: k8s.gcr.io/sig-storage/csi-attacher:v3.0.1
+    image: quay.io/k8scsi/csi-attacher:v3.0.1
     resources:
       limits:
         cpu: 500m
@@ -59,7 +59,7 @@ csidriver:
         cpu: 5m
         memory: 5Mi
   resizer:
-    image: k8s.gcr.io/sig-storage/csi-resizer:v1.0.1
+    image: quay.io/k8scsi/csi-resizer:v1.0.1
     resources:
       limits:
         cpu: 500m
