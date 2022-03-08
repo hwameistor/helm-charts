@@ -15,8 +15,6 @@ spec:
       hostNetwork: true
       hostPID: true
       serviceAccountName: hwameistor-admin
-      imagePullSecrets:
-        - name: daocloudsecret 
       containers:
         - name: local-disk-manager
           # Replace this with the built image name
