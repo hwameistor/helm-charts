@@ -21,7 +21,7 @@ spec:
           image: {{ .Values.ldmImage}}
           command:
           - /local-disk-manager
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           volumeMounts:
           - name: udev
             mountPath: /run/udev
