@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: hwameistor 
+  name: hwameistor-local-storage 
   namespace: {{ .Release.Namespace}}
 spec:
   selector:
     matchLabels:
-      app: hwameistor 
+      app: hwameistor-local-storage 
   template:
     metadata:
       labels:
-        app: hwameistor 
+        app: hwameistor-local-storage 
     spec:
       affinity:
         nodeAffinity:
