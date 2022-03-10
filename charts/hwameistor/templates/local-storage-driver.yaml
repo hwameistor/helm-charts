@@ -79,7 +79,7 @@ spec:
         - name: CSI_ENDPOINT
           value: unix://var/lib/kubelet/plugins/lvm.hwameistor.io/csi.sock
         - name: NODE_ANNOTATION_KEY_STORAGE_IPV4
-          value: lvm.hwameistor.io/storage-ipv4
+          value: localstorage.hwameistor.io/storage-ipv4
         image: {{ .Values.controller.member.image}}
         imagePullPolicy: IfNotPresent
         name: member
