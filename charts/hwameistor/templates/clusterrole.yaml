@@ -1,8 +1,8 @@
-{{- if not (lookup "rbac.authorization.k8s.io/v1" "ClusterRole" "" "cherry-io-role") }}
+{{- if not (lookup "rbac.authorization.k8s.io/v1" "ClusterRole" "" "hwameistor-role") }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: cherry-io-role
+  name: hwameistor-role
 rules:
 - apiGroups: ["*"]
   resources:
