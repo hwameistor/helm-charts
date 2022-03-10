@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: local-disk-manager
+  name: hwameistor-local-disk-manager
   namespace: {{ .Release.Namespace}}
 spec:
   selector:
     matchLabels:
-      name: local-disk-manager
+      name: hwameistor-local-disk-manager
   template:
     metadata:
       labels:
-        name: local-disk-manager
+        name: hwameistor-local-disk-manager
     spec:
       hostNetwork: true
       hostPID: true
@@ -64,14 +64,10 @@ spec:
           path: /run/udev
           type: Directory
       - name: procmount
-        # mount /proc/1/mounts (mount file of process 1 of host) inside container
-        # to read which partition is mounted on / path
         hostPath:
           path: /proc
           type: Directory
       - name: devmount
-        # the /dev directory is mounted so that we have access to the devices that
-        # are connected at runtime of the pod.
         hostPath:
           path: /dev
           type: Directory
