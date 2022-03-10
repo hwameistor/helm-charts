@@ -1,6 +1,6 @@
 hwameistorSchedulerReplicas: 1
 schedulerKubeApiServerConfigFilePath: /etc/kubernetes/admin.conf
-hwameistorSchedulerImage: hwameistor/scheduler:v0.0.3
+hwameistorSchedulerImage: hwameistor/scheduler:v0.0.4
 hwameistorSchedulerResources:
   limits:
     cpu: 300m
