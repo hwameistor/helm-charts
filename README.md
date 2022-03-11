@@ -27,11 +27,11 @@ $ helm install hwameistor -n hwameistor --create-namespace --generate-name
 or:
 
 ```console
-$ helm repo add hwameistor https://github.com/hwameistor/helm-charts
+$ helm repo add hwameistor http://hwameistor.io/helm-charts
 ```
 
 ```console
-$ helm install hwameistor -n hwameistor --create-namespace --generate-name
+$ helm install hwameistor/hwameistor -n hwameistor --create-namespace --generate-name
 ```
 
 You can then run `helm search repo hwameistor` to see the charts.
@@ -41,7 +41,7 @@ You can then run `helm search repo hwameistor` to see the charts.
 Once the Helm charts was installed. You should enable HwameiStor on specific nodes as follows:
 
 ```console
-$ kubectl label node <node-name> "csi.driver.hwameistor.io/local-storage=true"
+$ kubectl label node <node-name> "lvm.hwameistor.io/enable=true"
 ```
 
 ### STEP 3: Claim Disk By Type On Node
