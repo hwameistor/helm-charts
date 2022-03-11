@@ -24,7 +24,7 @@ spec:
               - key: app
                 operator: In
                 values:
-                - hwameistor
+                - hwameistor-local-storage
             topologyKey: topology.lvm.hwameistor.io/node
       containers:
       - args:
