@@ -29,7 +29,7 @@ controller:
         cpu: 5m
         memory: 5Mi
   member:
-    image: ghcr.io/hwameistor/local-storage:v0.0.2
+    image: ghcr.io/hwameistor/local-storage:v0.1.1
     resources:
       limits:
         cpu: 500m
