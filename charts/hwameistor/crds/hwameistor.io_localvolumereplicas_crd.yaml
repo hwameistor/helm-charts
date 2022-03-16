@@ -1,9 +1,9 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: localvolumereplicas.localstorage.hwameistor.io
+  name: localvolumereplicas.hwameistor.io
 spec:
-  group: localstorage.hwameistor.io
+  group: hwameistor.io
   names:
     kind: LocalVolumeReplica
     listKind: LocalVolumeReplicaList
@@ -14,10 +14,6 @@ spec:
   scope: Cluster
   versions:
   - additionalPrinterColumns:
-    - description: Volume kind
-      jsonPath: .spec.kind
-      name: kind
-      type: string
     - description: Required capacity of the volume replica
       jsonPath: .spec.requiredCapacityBytes
       name: capacity
@@ -67,13 +63,6 @@ spec:
                   or not. It's different from the regular resource delete interface
                   in Kubernetes. The purpose is to protect it from any mistakes
                 type: boolean
-              kind:
-                default: LVM
-                enum:
-                - LVM
-                - DISK
-                - RAM
-                type: string
               nodeName:
                 description: NodeName is the assigned node where the volume replica
                   is located
@@ -86,17 +75,9 @@ spec:
                 format: int64
                 minimum: 4194304
                 type: integer
-              striped:
-                default: false
-                description: Striped is to indecate if the volume should be stripped
-                  or not. Stripped volume is for high performance, but with high risk
-                  of failure Striped will take effect only for LVM volume
-                type: boolean
               volumeName:
                 description: VolumeName is the name of the volume, e.g. pvc-fbf3ffc3-66db-4dae-9032-bda3c61b8f85
                 type: string
-            required:
-            - kind
             type: object
           status:
             description: LocalVolumeReplicaStatus defines the observed state of LocalVolumeReplica

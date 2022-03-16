@@ -1,9 +1,9 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: localstoragenodes.localstorage.hwameistor.io
+  name: localstoragenodes.hwameistor.io
 spec:
-  group: localstorage.hwameistor.io
+  group: hwameistor.io
   names:
     kind: LocalStorageNode
     listKind: LocalStorageNodeList
@@ -61,17 +61,6 @@ spec:
           spec:
             description: LocalStorageNodeSpec defines the desired state of LocalStorageNode
             properties:
-              allowedRAMDiskTotalCapacityBytes:
-                default: 0
-                format: int64
-                type: integer
-              allowedVolumeKind:
-                description: 'Supported volume kind: DISK, LVM, RAM'
-                enum:
-                - LVM
-                - DISK
-                - RAM
-                type: string
               hostname:
                 type: string
               storageIP:
@@ -89,8 +78,6 @@ spec:
                     description: Zone is a collection of Local Storage Nodes
                     type: string
                 type: object
-            required:
-            - allowedVolumeKind
             type: object
           status:
             description: LocalStorageNodeStatus defines the observed state of LocalStorageNode
@@ -160,14 +147,6 @@ spec:
                     volumeCapacityBytesLimit:
                       format: int64
                       type: integer
-                    volumeKind:
-                      default: LVM
-                      description: 'Supported volume kind: DISK, LVM, RAM'
-                      enum:
-                      - LVM
-                      - DISK
-                      - RAM
-                      type: string
                     volumes:
                       items:
                         type: string
@@ -182,7 +161,6 @@ spec:
                   - usedCapacityBytes
                   - usedVolumeCount
                   - volumeCapacityBytesLimit
-                  - volumeKind
                   type: object
                 description: 'There may have multiple storage pools in a node. e.g.
                   HDD_POOL, SSD_POOL, NVMe_POOL Pools: poolName -> LocalPool'
