@@ -3,9 +3,8 @@ hwameistorImageRegistry: ghcr.io
 
 hwameistorSchedulerReplicas: 1
 schedulerKubeApiServerConfigFilePath: /etc/kubernetes/admin.conf
-hwameistorSchedulerImageRegistry: 
-hwameistorSchedulerImage: hwameistor/scheduler
-hwameistorSchedulerTag: v0.0.4
+hwameistorSchedulerImageRepository: hwameistor/scheduler
+hwameistorSchedulerTag: v0.1.2
 hwameistorSchedulerResources:
   limits:
     cpu: 300m
@@ -14,7 +13,7 @@ hwameistorSchedulerResources:
     cpu: 100m
     memory: 100Mi
 
-ldmImage: /hwameistor/local-disk-manager
+ldmImageRepository: hwameistor/local-disk-manager
 ldmImageTag: v0.0.2
 ldmResources:
   limits:
@@ -26,7 +25,7 @@ ldmResources:
 
 controller:
   registrar:
-    image: /k8scsi/csi-node-driver-registrar
+    imageRepository: k8scsi/csi-node-driver-registrar
     tag: v1.1.0
     resources:
       limits:
@@ -36,8 +35,8 @@ controller:
         cpu: 5m
         memory: 5Mi
   member:
-    image: /hwameistor/local-storage
-    tag: v0.1.1
+    imageRepository: hwameistor/local-storage
+    tag: v0.1.6
     resources:
       limits:
         cpu: 500m
@@ -49,7 +48,7 @@ controller:
 csidriver:
   replicas: 1
   provisioner:
-    image: /k8scsi/csi-provisioner
+    imageRepository: k8scsi/csi-provisioner
     tag: v2.0.3
     resources:
       limits:
@@ -59,7 +58,7 @@ csidriver:
         cpu: 5m
         memory: 5Mi
   attacher:
-    image: /k8scsi/csi-attacher
+    imageRepository: k8scsi/csi-attacher
     tag: v3.0.1
     resources:
       limits:
@@ -69,7 +68,7 @@ csidriver:
         cpu: 5m
         memory: 5Mi
   resizer:
-    image: /k8scsi/csi-resizer
+    imageRepository: k8scsi/csi-resizer
     tag: v1.0.1
     resources:
       limits:
