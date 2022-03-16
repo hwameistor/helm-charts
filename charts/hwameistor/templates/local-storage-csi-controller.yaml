@@ -36,7 +36,6 @@ spec:
         env:
         - name: CSI_ADDRESS
           value: /csi/csi.sock
-        #image: {{ .Values.csidriver.provisioner.image}}
         image: {{ .Values.k8sImageRegistry}}{{ .Values.csidriver.provisioner.image}}:{{ .Values.csidriver.provisioner.tag}}
         imagePullPolicy: IfNotPresent
         name: provisioner
@@ -60,7 +59,6 @@ spec:
         env:
         - name: CSI_ADDRESS
           value: /csi/csi.sock
-        #image: {{ .Values.csidriver.attacher.image}}
         image: {{ .Values.k8sImageRegistry}}{{ .Values.csidriver.attacher.image}}:{{ .Values.csidriver.attacher.tag}}
         imagePullPolicy: IfNotPresent
         name: attacher
@@ -83,7 +81,6 @@ spec:
         env:
         - name: CSI_ADDRESS
           value: /csi/csi.sock
-        #image: {{ .Values.csidriver.resizer.image}}
         image: {{ .Values.k8sImageRegistry}}{{ .Values.csidriver.resizer.image}}:{{ .Values.csidriver.resizer.tag}}
         imagePullPolicy: IfNotPresent
         name: resizer
