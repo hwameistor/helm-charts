@@ -30,7 +30,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: spec.nodeName
-        image: {{ .Values.k8sImageRegistry }}/{{ .Values.local-storage.registrar.imageRepository }}:{{ .Values.local-storage.registrar.tag }}
+        image: {{ .Values.k8sImageRegistry }}/{{ .Values.localStorage.registrar.imageRepository }}:{{ .Values.localStorage.registrar.tag }}
         imagePullPolicy: IfNotPresent
         lifecycle:
           preStop:
@@ -42,11 +42,11 @@ spec:
         name: registrar
         resources: 
           limits:
-            cpu: {{ .Values.local-storage.registrar.resources.limits.cpu}}
-            memory: {{ .Values.local-storage.registrar.resources.limits.memory}}
+            cpu: {{ .Values.localStorage.registrar.resources.limits.cpu}}
+            memory: {{ .Values.localStorage.registrar.resources.limits.memory}}
           requests:
-            cpu: {{ .Values.local-storage.registrar.resources.requests.cpu}}
-            memory: {{ .Values.local-storage.registrar.resources.requests.memory}}
+            cpu: {{ .Values.localStorage.registrar.resources.requests.cpu}}
+            memory: {{ .Values.localStorage.registrar.resources.requests.memory}}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
@@ -80,7 +80,7 @@ spec:
           value: unix://var/lib/kubelet/plugins/lvm.hwameistor.io/csi.sock
         - name: NODE_ANNOTATION_KEY_STORAGE_IPV4
           value: localstorage.hwameistor.io/storage-ipv4
-        image: {{ .Values.hwameistorImageRegistry}}/{{ .Values.local-storage.member.imageRepository}}:{{ .Values.local-storage.member.tag}}
+        image: {{ .Values.hwameistorImageRegistry}}/{{ .Values.localStorage.member.imageRepository}}:{{ .Values.localStorage.member.tag}}
         imagePullPolicy: IfNotPresent
         name: member
         ports:
@@ -99,11 +99,11 @@ spec:
           timeoutSeconds: 3
         resources:
           limits:
-            cpu: {{ .Values.local-storage.member.resources.limits.cpu}}
-            memory: {{ .Values.local-storage.member.resources.limits.memory}}
+            cpu: {{ .Values.localStorage.member.resources.limits.cpu}}
+            memory: {{ .Values.localStorage.member.resources.limits.memory}}
           requests:
-            cpu: {{ .Values.local-storage.member.resources.requests.cpu}}
-            memory: {{ .Values.local-storage.member.resources.requests.memory}}
+            cpu: {{ .Values.localStorage.member.resources.requests.cpu}}
+            memory: {{ .Values.localStorage.member.resources.requests.memory}}
         securityContext:
           #  allowPrivilegeEscalation: true
           capabilities:

@@ -18,7 +18,7 @@ spec:
       containers:
         - name: local-disk-manager
           # Replace this with the built image name
-          image: {{ .Values.hwameistorImageRegistry}}/{{ .Values.local-disk-manager.imageRepository}}:{{ .Values.local-disk-manager.tag}}
+          image: {{ .Values.hwameistorImageRegistry}}/{{ .Values.localDiskManager.imageRepository}}:{{ .Values.localDiskManager.tag}}
           command:
           - /local-disk-manager
           imagePullPolicy: IfNotPresent
@@ -53,11 +53,11 @@ spec:
             privileged: true
           resources:
             limits:
-              cpu: {{ .Values.local-disk-manager.resources.limits.cpu}}
-              memory: {{ .Values.loal-disk-manager.resources.limits.memory}}
+              cpu: {{ .Values.localDiskManager.resources.limits.cpu}}
+              memory: {{ .Values.localDiskManager.resources.limits.memory}}
             requests:
-              cpu: {{ .Values.local-disk-manager.resources.requests.cpu}}
-              memory: {{ .Values.local-disk-manager.resources.requests.memory}}
+              cpu: {{ .Values.localDiskManager.resources.requests.cpu}}
+              memory: {{ .Values.localDiskManager.resources.requests.memory}}
       volumes:
       - name: udev
         hostPath:

@@ -14,7 +14,7 @@ scheduler:
       cpu: 100m
       memory: 100Mi
 
-local-disk-manager:
+localDiskManager:
   imageRepository: hwameistor/local-disk-manager
   tag: v0.0.2
   resources:
@@ -25,7 +25,7 @@ local-disk-manager:
       cpu: 100m
       memory: 100Mi
 
-local-storage:
+localStorage:
   registrar:
     imageRepository: k8scsi/csi-node-driver-registrar
     tag: v1.1.0

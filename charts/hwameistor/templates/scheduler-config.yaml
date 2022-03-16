@@ -5,19 +5,17 @@ metadata:
   namespace: {{ .Release.Namespace}}
 data:
   hwameistor-scheduler-config.yaml: |
-    apiVersion: kubescheduler.config.k8s.io/v1alpha1
+    apiVersion: kubescheduler.config.k8s.io/v1beta2
     kind: KubeSchedulerConfiguration
-    schedulerName: hwameistor-scheduler
+    profiles:
+      - schedulerName: hwameistor-scheduler
+        plugins:
+          filter:
+            enabled:
+            - name: hwameistor-scheduler-plugin
     leaderElection:
       leaderElect: true
       resourceName: hwameistor-scheduler
       resourceNamespace: {{ .Release.Namespace}}
     clientConnection:
-      kubeconfig: /etc/kubernetes/scheduler.conf 
-    plugins:
-      filter:
-        enabled:
-        - name: dlocal-scheduler-plugin
-      score:
-        enabled:
-        - name: dlocal-scheduler-plugin
+      kubeconfig: /etc/kubernetes/scheduler.conf

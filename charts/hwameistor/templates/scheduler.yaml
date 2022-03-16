@@ -23,12 +23,10 @@ spec:
               - key: node-role.kubernetes.io/master
                 operator: Exists
       containers:
-      - command:
-        - kube-scheduler
+      - args:
         - -v=2
         - --bind-address=0.0.0.0
         - --kubeconfig=/etc/kubernetes/scheduler.conf
-        - --scheduler-name=hwameistor-scheduler
         - --leader-elect=false
         - --leader-elect-resource-name=hwameistor-scheduler
         - --leader-elect-resource-namespace={{ .Release.Namespace}}
