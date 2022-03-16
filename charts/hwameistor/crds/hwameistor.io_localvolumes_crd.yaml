@@ -1,9 +1,9 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: localvolumes.localstorage.hwameistor.io
+  name: localvolumes.hwameistor.io
 spec:
-  group: localstorage.hwameistor.io
+  group: hwameistor.io
   names:
     kind: LocalVolume
     listKind: LocalVolumeList
@@ -17,10 +17,6 @@ spec:
     - description: Name of storage pool
       jsonPath: .spec.poolName
       name: pool
-      type: string
-    - description: Volume kind
-      jsonPath: .spec.kind
-      name: kind
       type: string
     - description: Number of volume replica
       jsonPath: .spec.replicaNumber
@@ -159,16 +155,17 @@ spec:
                   or not. It's different from the regular resource delete interface
                   in Kubernetes. The purpose is to protect it from any mistakes
                 type: boolean
-              kind:
-                description: 'kind : LVM, DISK, RAM'
-                enum:
-                - LVM
-                - DISK
-                - RAM
-                type: string
               poolName:
                 description: PoolName is the name of the storage pool, e.g. LocalStorage_PoolHDD,
                   LocalStorage_PoolSSD, etc..
+                type: string
+              pvcName:
+                description: PersistentVolumeClaimName is the name of the associated
+                  PVC
+                type: string
+              pvcNamespace:
+                description: PersistentVolumeClaimNamespace is the namespace of the
+                  associated PVC
                 type: string
               replicaNumber:
                 description: 'replica number: 1 - non-HA, 2 - HA, 3 - migration (temp)'
@@ -180,14 +177,10 @@ spec:
                 format: int64
                 minimum: 4194304
                 type: integer
-              striped:
-                default: false
-                description: Striped is to indicate if the volume should be stripped
-                  or not. Stripped volume is for high performance, but with high risk
-                  of failure Striped will take effect only for LVM volume
-                type: boolean
-            required:
-            - kind
+              volumegroup:
+                description: VolumeGroup is the group name of the local volumes. It
+                  is designed for the scheduling and allocating.
+                type: string
             type: object
           status:
             description: LocalVolumeStatus defines the observed state of LocalVolume
