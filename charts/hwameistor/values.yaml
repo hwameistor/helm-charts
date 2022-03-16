@@ -1,6 +1,11 @@
+k8sImageRegistry: quay.io
+hwameistorImageRegistry: ghcr.io
+
 hwameistorSchedulerReplicas: 1
 schedulerKubeApiServerConfigFilePath: /etc/kubernetes/admin.conf
-hwameistorSchedulerImage: hwameistor/scheduler:v0.0.4
+hwameistorSchedulerImageRegistry: 
+hwameistorSchedulerImage: hwameistor/scheduler
+hwameistorSchedulerTag: v0.0.4
 hwameistorSchedulerResources:
   limits:
     cpu: 300m
@@ -9,7 +14,8 @@ hwameistorSchedulerResources:
     cpu: 100m
     memory: 100Mi
 
-ldmImage: ghcr.io/hwameistor/local-disk-manager:v0.0.2
+ldmImage: /hwameistor/local-disk-manager
+ldmImageTag: v0.0.2
 ldmResources:
   limits:
     cpu: 300m
@@ -20,7 +26,8 @@ ldmResources:
 
 controller:
   registrar:
-    image: quay.io/k8scsi/csi-node-driver-registrar:v1.1.0
+    image: /k8scsi/csi-node-driver-registrar
+    tag: v1.1.0
     resources:
       limits:
         cpu: 500m
@@ -29,7 +36,8 @@ controller:
         cpu: 5m
         memory: 5Mi
   member:
-    image: ghcr.io/hwameistor/local-storage:v0.1.1
+    image: /hwameistor/local-storage
+    tag: v0.1.1
     resources:
       limits:
         cpu: 500m
@@ -41,7 +49,8 @@ controller:
 csidriver:
   replicas: 1
   provisioner:
-    image: quay.io/k8scsi/csi-provisioner:v2.0.3
+    image: /k8scsi/csi-provisioner
+    tag: v2.0.3
     resources:
       limits:
         cpu: 500m
@@ -50,7 +59,8 @@ csidriver:
         cpu: 5m
         memory: 5Mi
   attacher:
-    image: quay.io/k8scsi/csi-attacher:v3.0.1
+    image: /k8scsi/csi-attacher
+    tag: v3.0.1
     resources:
       limits:
         cpu: 500m
@@ -59,7 +69,8 @@ csidriver:
         cpu: 5m
         memory: 5Mi
   resizer:
-    image: quay.io/k8scsi/csi-resizer:v1.0.1
+    image: /k8scsi/csi-resizer
+    tag: v1.0.1
     resources:
       limits:
         cpu: 500m

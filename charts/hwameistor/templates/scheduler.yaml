@@ -33,7 +33,8 @@ spec:
         - --leader-elect-resource-name=hwameistor-scheduler
         - --leader-elect-resource-namespace={{ .Release.Namespace}}
         - --config=/etc/hwameistor/hwameistor-scheduler-config.yaml
-        image: {{ .Values.hwameistorSchedulerImage}}
+        #image: {{ .Values.hwameistorSchedulerImage}}
+        image: {{ .Values.hwameistorSchedulerImageRegistry}}{{ .Values.hwameistorSchedulerImage}}:{{ .Values.hwameistorSchedulerTag}}
         imagePullPolicy: IfNotPresent
         name: hwameistor-kube-scheduler
         resources:

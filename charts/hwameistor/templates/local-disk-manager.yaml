@@ -18,7 +18,8 @@ spec:
       containers:
         - name: local-disk-manager
           # Replace this with the built image name
-          image: {{ .Values.ldmImage}}
+          #image: {{ .Values.ldmImage}}
+          image: {{ .Values.hwameistorImageRegistry}}{{ .Values.ldmImage}}:{{ .Values.ldmImageTag}}
           command:
           - /local-disk-manager
           imagePullPolicy: IfNotPresent
