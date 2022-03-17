@@ -15,6 +15,7 @@ scheduler:
       memory: 100Mi
 
 localDiskManager:
+  tolerationsOnMaster: true
   imageRepository: hwameistor/local-disk-manager
   tag: v0.0.2
   resources:
@@ -37,6 +38,7 @@ localStorage:
         cpu: 5m
         memory: 5Mi
   member:
+    tolerationsOnMaster: true
     imageRepository: hwameistor/local-storage
     tag: v0.1.6
     resources:

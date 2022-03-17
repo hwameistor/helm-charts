@@ -134,6 +134,7 @@ spec:
       serviceAccountName: hwameistor-admin 
       serviceAccount: hwameistor-admin
       terminationGracePeriodSeconds: 30
+      {{- if .Values.localStorage.member.tolerationsOnMaster }}
       tolerations:
       - key: CriticalAddonsOnly
         operator: Exists
@@ -146,6 +147,7 @@ spec:
       - effect: NoSchedule
         key: node.cloudprovider.kubernetes.io/uninitialized
         operator: Exists
+      {{- end }}
       volumes:
       - hostPath:
           path: /var/lib/kubelet/plugins/lvm.hwameistor.io
