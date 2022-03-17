@@ -134,7 +134,7 @@ spec:
       serviceAccountName: hwameistor-admin 
       serviceAccount: hwameistor-admin
       terminationGracePeriodSeconds: 30
-      {{- if .Values.localStorage.member.tolerationsOnMaster }}
+      {{- if .Values.localStorage.tolerationsOnMaster }}
       tolerations:
       - key: CriticalAddonsOnly
         operator: Exists

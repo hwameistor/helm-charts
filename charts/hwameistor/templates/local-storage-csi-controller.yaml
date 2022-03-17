@@ -4,7 +4,7 @@ metadata:
   name: hwameistor-csi-controller 
   namespace: {{ .Release.Namespace}}
 spec:
-  replicas: {{ .Values.csidriver.replicas}}
+  replicas: {{ .Values.localStorageCSIController.replicas}}
   selector:
     matchLabels:
       app: hwameistor-csi-controller
@@ -36,16 +36,16 @@ spec:
         env:
         - name: CSI_ADDRESS
           value: /csi/csi.sock
-        image: {{ .Values.k8sImageRegistry}}/{{ .Values.csidriver.provisioner.imageRepository}}:{{ .Values.csidriver.provisioner.tag}}
+        image: {{ .Values.k8sImageRegistry}}/{{ .Values.localStorageCSIController.provisioner.imageRepository}}:{{ .Values.localStorageCSIController.provisioner.tag}}
         imagePullPolicy: IfNotPresent
         name: provisioner
         resources:
           limits:
-            cpu: {{ .Values.csidriver.provisioner.resources.limits.cpu}}
-            memory: {{ .Values.csidriver.provisioner.resources.limits.memory}}
+            cpu: {{ .Values.localStorageCSIController.provisioner.resources.limits.cpu}}
+            memory: {{ .Values.localStorageCSIController.provisioner.resources.limits.memory}}
           requests:
-            cpu: {{ .Values.csidriver.provisioner.resources.requests.cpu}}
-            memory: {{ .Values.csidriver.provisioner.resources.requests.memory}}
+            cpu: {{ .Values.localStorageCSIController.provisioner.resources.requests.cpu}}
+            memory: {{ .Values.localStorageCSIController.provisioner.resources.requests.memory}}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
@@ -59,16 +59,16 @@ spec:
         env:
         - name: CSI_ADDRESS
           value: /csi/csi.sock
-        image: {{ .Values.k8sImageRegistry}}/{{ .Values.csidriver.attacher.imageRepository}}:{{ .Values.csidriver.attacher.tag}}
+        image: {{ .Values.k8sImageRegistry}}/{{ .Values.localStorageCSIController.attacher.imageRepository}}:{{ .Values.localStorageCSIController.attacher.tag}}
         imagePullPolicy: IfNotPresent
         name: attacher
         resources:
           limits:
-            cpu: {{ .Values.csidriver.attacher.resources.limits.cpu}}
-            memory: {{ .Values.csidriver.attacher.resources.limits.memory}}
+            cpu: {{ .Values.localStorageCSIController.attacher.resources.limits.cpu}}
+            memory: {{ .Values.localStorageCSIController.attacher.resources.limits.memory}}
           requests:
-            cpu: {{ .Values.csidriver.attacher.resources.requests.cpu}}
-            memory: {{ .Values.csidriver.attacher.resources.requests.memory}}
+            cpu: {{ .Values.localStorageCSIController.attacher.resources.requests.cpu}}
+            memory: {{ .Values.localStorageCSIController.attacher.resources.requests.memory}}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
@@ -81,16 +81,16 @@ spec:
         env:
         - name: CSI_ADDRESS
           value: /csi/csi.sock
-        image: {{ .Values.k8sImageRegistry}}/{{ .Values.csidriver.resizer.imageRepository}}:{{ .Values.csidriver.resizer.tag}}
+        image: {{ .Values.k8sImageRegistry}}/{{ .Values.localStorageCSIController.resizer.imageRepository}}:{{ .Values.localStorageCSIController.resizer.tag}}
         imagePullPolicy: IfNotPresent
         name: resizer
         resources:
           limits:
-            cpu: {{ .Values.csidriver.resizer.resources.limits.cpu}}
-            memory: {{ .Values.csidriver.resizer.resources.limits.memory}}
+            cpu: {{ .Values.localStorageCSIController.resizer.resources.limits.cpu}}
+            memory: {{ .Values.localStorageCSIController.resizer.resources.limits.memory}}
           requests:
-            cpu: {{ .Values.csidriver.resizer.resources.requests.cpu}}
-            memory: {{ .Values.csidriver.resizer.resources.requests.memory}}
+            cpu: {{ .Values.localStorageCSIController.resizer.resources.requests.cpu}}
+            memory: {{ .Values.localStorageCSIController.resizer.resources.requests.memory}}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
