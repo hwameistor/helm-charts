@@ -15,6 +15,7 @@ scheduler:
       memory: 100Mi
 
 localDiskManager:
+  tolerationsOnMaster: true
   imageRepository: hwameistor/local-disk-manager
   tag: v0.0.2
   resources:
@@ -26,6 +27,7 @@ localDiskManager:
       memory: 100Mi
 
 localStorage:
+  tolerationsOnMaster: true
   registrar:
     imageRepository: k8scsi/csi-node-driver-registrar
     tag: v1.1.0
@@ -47,7 +49,7 @@ localStorage:
         cpu: 5m
         memory: 5Mi
 
-csidriver:
+localStorageCSIController:
   replicas: 1
   provisioner:
     imageRepository: k8scsi/csi-provisioner
