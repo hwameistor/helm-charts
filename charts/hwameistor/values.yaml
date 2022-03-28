@@ -1,5 +1,8 @@
 k8sImageRegistry: quay.io
 hwameistorImageRegistry: ghcr.io
+# Users in China can change to these sites for option
+#k8sImageRegistry: quay.m.daocloud.io
+#hwameistorImageRegistry: ghcr.m.daocloud.io
 
 scheduler:
   replicas: 1
