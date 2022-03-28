@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hwameistor-csi-controller 
+  name: hwameistor-local-storage-csi-controller 
   namespace: {{ .Release.Namespace}}
 spec:
   replicas: {{ .Values.localStorageCSIController.replicas}}
   selector:
     matchLabels:
-      app: hwameistor-csi-controller
+      app: hwameistor-local-storage-csi-controller
   strategy:
     type: Recreate
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: hwameistor-csi-controller
+        app: hwameistor-local-storage-csi-controller
     spec:
       affinity:
         podAffinity:
