@@ -50,9 +50,8 @@ $ helm repo add hwameistor http://hwameistor.io/helm-charts
 $ helm install hwameistor/hwameistor -n hwameistor --create-namespace --generate-name
 ```
 
-You can then run `helm search repo hwameistor` to see the charts.
-##Roadmap
-See road map at [Roadmap](https://github.com/hwameistor/helm-charts/blob/main/doc/roadmap.md)
+You can then run `helm search repo hwameistor` to see the charts
+
 ### STEP 2: Enable HwameiStor On Node
 
 Once the Helm charts was installed. You should enable HwameiStor on specific nodes as follows:
@@ -90,6 +89,9 @@ $ kubectl apply -f ./local-disk-claim.yaml
 To deploy stateful applications, please see [Deploy Applications With HwameiStor](https://github.com/hwameistor/local-storage/blob/main/doc/installation.md#step-3-create-storageclass)
 
 More infomation [HwameiStor](https://hwameistor.io)
+
+## Roadmap
+See road map at [Roadmap](https://github.com/hwameistor/helm-charts/blob/main/doc/roadmap.md)
 
 ## Contributing
 
