@@ -211,6 +211,8 @@ spec:
                 - Claimed
                 - Unclaimed
                 - Released
+                - Reserved
+                - Inuse
                 type: string
             type: object
         type: object
