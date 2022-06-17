@@ -10,22 +10,6 @@ metadata:
   name: hwameistor-scheduler-config
   namespace: {{ .Release.Namespace }}
 data:
-{{- if (semverCompare "> 1.18-0" (include "hwameistor.kubeVersion" .)) }}
-  hwameistor-scheduler-config.yaml: |
-    apiVersion: kubescheduler.config.k8s.io/v1beta2
-    kind: KubeSchedulerConfiguration
-    profiles:
-      - schedulerName: hwameistor-scheduler
-        plugins:
-          filter:
-            enabled:
-            - name: hwameistor-scheduler-plugin
-    leaderElection:
-      leaderElect: true
-      lockObjectName: hwameistor-scheduler
-    clientConnection:
-      kubeconfig: /etc/kubernetes/scheduler.conf 
-{{- else }}
   hwameistor-scheduler-config.yaml: |
     apiVersion: kubescheduler.config.k8s.io/v1alpha1
     kind: KubeSchedulerConfiguration
@@ -38,4 +22,3 @@ data:
       filter:
         enabled:
           - name: hwameistor-scheduler-plugin
-{{- end -}}
