@@ -1,3 +1,4 @@
+{{- if not (lookup "apps/v1" "DaemonSet" .Release.Namespace "hwameistor-local-disk-manager") }}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -132,3 +133,4 @@ spec:
           key: node.cloudprovider.kubernetes.io/uninitialized
           operator: Exists
       {{- end }}
+{{- end }}

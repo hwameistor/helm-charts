@@ -5,7 +5,7 @@ Hwameistor is deployed at {{ .Release.Namespace }}, release name is {{ .Release.
 To learn more about the release, try:
 
   $ helm status {{ .Release.Name }} -n {{ .Release.Namespace }}
-  $ helm get manifests {{ .Release.Name }} -n {{ .Release.Namespace }}
+  $ helm get manifest {{ .Release.Name }} -n {{ .Release.Namespace }}
 
 You can use hwameistor to provide LVM and Disk volume:
 

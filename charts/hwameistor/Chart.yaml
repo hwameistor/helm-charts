@@ -3,4 +3,4 @@ name: hwameistor
 description: the HwameiStor local storage
 type: application
 version: 0.2.9
-appVersion:
+appVersion: 0.2.9
