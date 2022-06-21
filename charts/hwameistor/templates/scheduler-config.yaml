@@ -45,5 +45,8 @@ data:
       reserve:
         enabled:
           - name: hwameistor-scheduler-plugin
+      unreserve:
+        enabled:
+          - name: hwameistor-scheduler-plugin
 {{- end -}}
 {{- end }}
