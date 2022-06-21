@@ -1,3 +1,4 @@
+{{- if not (lookup "apps/v1" "Deployment" .Release.Namespace "hwameistor-local-disk-csi-controller") }}
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -61,3 +62,4 @@ spec:
           hostPath:
             path: /var/lib/kubelet/plugins/disk.hwameistor.io
             type: DirectoryOrCreate
+{{- end -}}

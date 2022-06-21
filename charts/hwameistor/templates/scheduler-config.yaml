@@ -1,3 +1,4 @@
+{{- if not (lookup "v1" "ConfigMap" .Release.Namespace "hwameistor-scheduler-config") }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -20,9 +21,12 @@ data:
           filter:
             enabled:
             - name: hwameistor-scheduler-plugin
+          reserve:
+            enabled:
+            - name: hwameistor-scheduler-plugin
     leaderElection:
       leaderElect: true
-      lockObjectName: hwameistor-scheduler
+      resourceName: hwameistor-scheduler
     clientConnection:
       kubeconfig: /etc/kubernetes/scheduler.conf 
 {{- else }}
@@ -38,4 +42,8 @@ data:
       filter:
         enabled:
           - name: hwameistor-scheduler-plugin
+      reserve:
+        enabled:
+          - name: hwameistor-scheduler-plugin
 {{- end -}}
+{{- end }}
