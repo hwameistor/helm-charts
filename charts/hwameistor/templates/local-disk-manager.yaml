@@ -17,6 +17,7 @@ spec:
       hostPID: true
       serviceAccountName: hwameistor-admin
       containers:
+{{- if .Values.localDiskManager.enableCSI }}  
         - name: registrar
           image: {{ .Values.k8sImageRegistry }}/{{ .Values.localDiskManager.registrar.imageRepository }}:{{ .Values.localDiskManager.registrar.tag }}
           imagePullPolicy: IfNotPresent
@@ -38,6 +39,7 @@ spec:
               mountPath: /csi
             - name: registration-dir
               mountPath: /registration
+{{- end }}
         - name: manager
           # Replace this with the built image name
           image: {{ .Values.hwameistorImageRegistry }}/{{ .Values.localDiskManager.manager.imageRepository}}:{{ .Values.localDiskManager.manager.tag}}
@@ -46,6 +48,7 @@ spec:
           args:
             - --endpoint=$(CSI_ENDPOINT)
             - --nodeid=$(NODENAME)
+            - --csi-enable={{ .Values.localDiskManager.enableCSI }}
           imagePullPolicy: IfNotPresent
           volumeMounts:
           - name: udev
