@@ -19,6 +19,7 @@ scheduler:
 
 localDiskManager:
   tolerationsOnMaster: true
+  enableCSI: true
   registrar:
     imageRepository: k8scsi/csi-node-driver-registrar
     tag: v1.1.0

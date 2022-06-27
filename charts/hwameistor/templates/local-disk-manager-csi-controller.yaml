@@ -1,4 +1,4 @@
-{{- if not (lookup "apps/v1" "Deployment" .Release.Namespace "hwameistor-local-disk-csi-controller") }}
+{{- if and ( not (lookup "apps/v1" "Deployment" .Release.Namespace "hwameistor-local-disk-csi-controller") ) .Values.localDiskManager.enableCSI }}
 kind: Deployment
 apiVersion: apps/v1
 metadata:
