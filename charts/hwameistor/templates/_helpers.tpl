@@ -3,6 +3,11 @@
   {{- default .Capabilities.KubeVersion.Version .Values.kubeVersion -}}
 {{- end -}}
 
+{{/* Allow KubeletRootDir to be overridden. */}}
+{{- define "hwameistor.kubeletRootDir" -}}
+  {{- default "/var/lib/kubelet" .Values.kubeletRootDir -}}
+{{- end -}}
+
 {{/* Return scheduler image tag. */}}
 {{- define "hwameistor.scheduler.tag" -}}
 {{- if (semverCompare "> 1.20-0" (include "hwameistor.kubeVersion" .)) }}

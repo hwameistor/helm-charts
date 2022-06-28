@@ -60,6 +60,6 @@ spec:
       volumes:
         - name: socket-dir
           hostPath:
-            path: /var/lib/kubelet/plugins/disk.hwameistor.io
+            path: {{ template "hwameistor.kubeletRootDir" . }}/plugins/disk.hwameistor.io
             type: DirectoryOrCreate
 {{- end -}}
