@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: hwameistor-local-disk-manager
+  namespace: {{ .Release.Namespace}}
+spec:
+  selector:
+    matchLabels:
+      name: hwameistor-local-disk-manager
+  template:
+    metadata:
+      labels:
+        name: hwameistor-local-disk-manager
+    spec:
+      hostNetwork: true
+      hostPID: true
+      serviceAccountName: hwameistor-admin
+      containers:
+        - name: local-disk-manager
+          # Replace this with the built image name
+          image: {{ .Values.ldmImage}}
+          command:
+          - /local-disk-manager
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+          - name: udev
+            mountPath: /run/udev
+          - name: procmount
+            mountPath: /host/proc
+            readOnly: true
+          - name: devmount
+            mountPath: /dev
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NODENAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: OPERATOR_NAME
+              value: "local-disk-manager"
+          securityContext:
+            privileged: true
+          resources:
+            limits:
+              cpu: {{ .Values.ldmResources.limits.cpu}}
+              memory: {{ .Values.ldmResources.limits.memory}}
+            requests:
+              cpu: {{ .Values.ldmResources.requests.cpu}}
+              memory: {{ .Values.ldmResources.requests.memory}}
+      volumes:
+      - name: udev
+        hostPath:
+          path: /run/udev
+          type: Directory
+      - name: procmount
+        hostPath:
+          path: /proc
+          type: Directory
+      - name: devmount
+        hostPath:
+          path: /dev
+          type: Directory
+      tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoSchedule
+          key: node.cloudprovider.kubernetes.io/uninitialized
+          operator: Exists
+

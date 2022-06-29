@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cherry-io-scheduler
+  name: hwameistor-scheduler
   namespace: {{ .Release.Namespace}}
 spec:
-  replicas: {{ .Values.replicas}}
+  replicas: {{ .Values.hwameistorSchedulerReplicas}}
   selector:
     matchLabels:
-      app: cherry-io-scheduler
+      app: hwameistor-scheduler
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: cherry-io-scheduler
+        app: hwameistor-scheduler
     spec:
       affinity:
         nodeAffinity:
@@ -28,29 +28,29 @@ spec:
         - -v=2
         - --bind-address=0.0.0.0
         - --kubeconfig=/etc/kubernetes/scheduler.conf
-        - --scheduler-name=cherry-io-scheduler
+        - --scheduler-name=hwameistor-scheduler
         - --leader-elect=false
-        - --leader-elect-resource-name=cherry-io-scheduler
+        - --leader-elect-resource-name=hwameistor-scheduler
         - --leader-elect-resource-namespace={{ .Release.Namespace}}
-        - --config=/etc/cherry-io/cherry-io-scheduler-config.yaml
-        image: {{ .Values.image}}
+        - --config=/etc/hwameistor/hwameistor-scheduler-config.yaml
+        image: {{ .Values.hwameistorSchedulerImage}}
         imagePullPolicy: IfNotPresent
-        name: cherry-io-kube-scheduler
+        name: hwameistor-kube-scheduler
         resources:
           limits:
-            cpu: {{ .Values.resources.limits.cpu}}
-            memory: {{ .Values.resources.limits.memory}}
+            cpu: {{ .Values.hwameistorSchedulerResources.limits.cpu}}
+            memory: {{ .Values.hwameistorSchedulerResources.limits.memory}}
           requests:
-            cpu: {{ .Values.resources.requests.cpu}}
-            memory: {{ .Values.resources.requests.memory}}
+            cpu: {{ .Values.hwameistorSchedulerResources.requests.cpu}}
+            memory: {{ .Values.hwameistorSchedulerResources.requests.memory}}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /etc/kubernetes/scheduler.conf
           name: kubeconfig
           readOnly: true
-        - mountPath: /etc/cherry-io/
-          name: cherry-io-scheduler-config
+        - mountPath: /etc/hwameistor/
+          name: hwameistor-scheduler-config
           readOnly: true
       volumes:
       - hostPath:
@@ -58,13 +58,13 @@ spec:
           type: FileOrCreate
         name: kubeconfig
       - configMap:
-          name: cherry-io-scheduler-config 
+          name: hwameistor-scheduler-config 
           items:
-          - key: cherry-io-scheduler-config.yaml
-            path: cherry-io-scheduler-config.yaml
-        name: cherry-io-scheduler-config
-      serviceAccountName: cherry-io-admin 
-      serviceAccount: cherry-io-admin
+          - key: hwameistor-scheduler-config.yaml
+            path: hwameistor-scheduler-config.yaml
+        name: hwameistor-scheduler-config
+      serviceAccountName: hwameistor-admin 
+      serviceAccount: hwameistor-admin
       tolerations:
       - key: CriticalAddonsOnly
         operator: Exists

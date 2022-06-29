@@ -41,7 +41,6 @@ $ helm install hwameistor -n hwameistor --create-namespace --generate-name
 ```
 
 or:
-
 ```console
 $ helm repo add hwameistor http://hwameistor.io/helm-charts
 ```
@@ -92,6 +91,44 @@ More infomation [HwameiStor](https://hwameistor.io)
 
 ## Roadmap
 See road map at [Roadmap](https://github.com/hwameistor/helm-charts/blob/main/doc/roadmap.md)
+
+### STEP 2: Enable HwameiStor On Node
+
+Once the Helm charts was installed. You should enable HwameiStor on specific nodes as follows:
+
+```console
+$ kubectl label node <node-name> "csi.driver.hwameistor.io/local-storage=true"
+```
+
+### STEP 3: Claim Disk By Type On Node
+
+Then claim disk for your local-storage by apply LocalDiskClaim CR:
+
+```console
+cat > ./local-disk-claim.yaml <<- EOF
+apiVersion: hwameistor.io/v1alpha1
+kind: LocalDiskClaim
+metadata:
+  name: <anyname>
+  namespace: hwameistor
+spec:
+  nodeName: <node-name>
+  description:
+    diskType: <HDD or SSD or NVMe>
+EOF
+```
+
+```console
+$ kubectl apply -f ./local-disk-claim.yaml
+```
+
+**Congratulations! HwameiStor is now deployed on your cluster.**
+
+## Next Step
+
+To deploy stateful applications, please see [Deploy Applications With HwameiStor](https://github.com/hwameistor/local-storage#step-3-create-storageclass)
+
+More infomation [HwameiStor](https://hwameistor.io)
 
 ## Contributing
 

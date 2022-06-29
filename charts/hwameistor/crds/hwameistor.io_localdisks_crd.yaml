@@ -1,14 +1,9 @@
-
----
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  annotations:
-    controller-gen.kubebuilder.io/version: v0.7.0
-  creationTimestamp: null
-  name: localdisks.gaea.daocloud.io
+  name: localdisks.hwameistor.io
 spec:
-  group: gaea.daocloud.io
+  group: hwameistor.io
   names:
     kind: LocalDisk
     listKind: LocalDiskList
@@ -16,17 +11,17 @@ spec:
     shortNames:
     - ld
     singular: localdisk
-  scope: Namespaced
+  scope: Cluster
   versions:
   - additionalPrinterColumns:
     - jsonPath: .spec.nodeName
-      name: NodeName
+      name: NodeMatch
       type: string
     - jsonPath: .spec.claimRef.name
       name: Claim
       type: string
     - jsonPath: .status.claimState
-      name: Status
+      name: Phase
       type: string
     name: v1alpha1
     schema:
@@ -96,6 +91,10 @@ spec:
                 description: DiskAttributes has hardware/static attributes of the
                   disk
                 properties:
+                  devType:
+                    description: DeviceType represents the type of device like sparse,
+                      disk, partition, lvm, crypt
+                    type: string
                   formFactor:
                     description: FormFactor is the disk size, like 2.5 inches
                     type: string
@@ -136,28 +135,34 @@ spec:
                 type: string
               partitionInfo:
                 description: PartitionInfo contains partition information
-                properties:
-                  filesystem:
-                    description: FileSystem contains mount point and filesystem type
-                    properties:
-                      fsType:
-                        description: Type represents the FileSystem type of the disk
-                        type: string
-                      mountPoint:
-                        description: MountPoint represents the mountpoint of the disk
-                        type: string
-                    type: object
-                  hasFileSystem:
-                    description: HasFileSystem represents whether the filesystem is
-                      included
-                    type: boolean
-                  path:
-                    description: Path represents the partition path in the OS
-                    type: string
-                required:
-                - hasFileSystem
-                - path
-                type: object
+                items:
+                  description: PartitionInfo contains partition information(e.g. FileSystem)
+                  properties:
+                    filesystem:
+                      description: FileSystem contains mount point and filesystem
+                        type
+                      properties:
+                        fsType:
+                          description: Type represents the FileSystem type of the
+                            disk
+                          type: string
+                        mountPoint:
+                          description: MountPoint represents the mountpoint of the
+                            disk
+                          type: string
+                      type: object
+                    hasFileSystem:
+                      description: HasFileSystem represents whether the filesystem
+                        is included
+                      type: boolean
+                    path:
+                      description: Path represents the partition path in the OS
+                      type: string
+                  required:
+                  - hasFileSystem
+                  - path
+                  type: object
+                type: array
               partitioned:
                 description: HasPartition represents if the disk has partitions or
                   not
@@ -194,6 +199,8 @@ spec:
               uuid:
                 description: UUID global unique identifier of the disk
                 type: string
+            required:
+            - nodeName
             type: object
           status:
             description: LocalDiskStatus defines the observed state of LocalDisk
@@ -209,11 +216,4 @@ spec:
         type: object
     served: true
     storage: true
-    subresources:
-      status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
+    subresources: {}
